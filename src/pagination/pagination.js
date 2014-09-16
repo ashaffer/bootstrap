@@ -97,6 +97,7 @@ angular.module('ui.bootstrap.pagination', [])
       }
 
       // Setup configuration parameters
+      var pageLabel = angular.isDefined(attrs.pageLabel) ? function(idx) { return scope.$parent.$eval(attrs.pageLabel, {$page: idx}); } : function(idx) { return idx; };
       var maxSize = angular.isDefined(attrs.maxSize) ? scope.$parent.$eval(attrs.maxSize) : paginationConfig.maxSize,
           rotate = angular.isDefined(attrs.rotate) ? scope.$parent.$eval(attrs.rotate) : paginationConfig.rotate;
       scope.boundaryLinks = angular.isDefined(attrs.boundaryLinks) ? scope.$parent.$eval(attrs.boundaryLinks) : paginationConfig.boundaryLinks;
@@ -150,7 +151,7 @@ angular.module('ui.bootstrap.pagination', [])
 
         // Add page number links
         for (var number = startPage; number <= endPage; number++) {
-          var page = makePage(number, number, number === currentPage);
+          var page = makePage(number, pageLabel(number), number === currentPage);
           pages.push(page);
         }
 
